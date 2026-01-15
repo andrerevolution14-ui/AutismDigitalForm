@@ -203,7 +203,19 @@
             font-size: 0.9rem;
             color: #94A3B8;
         }
+
+        /* --- GOOGLE ANALYTICS PLACEHOLDER --- */
+        /* TODO: Replace G-XXXXXXXXXX with your actual Measurement ID */
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-32B4F46FNY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-32B4F46FNY');
+    </script>
 </head>
 
 <body>
@@ -305,6 +317,15 @@
             localStorage.setItem('pay_button_clicks', clicks);
 
             console.log('Button Clicked! Total clicks:', clicks);
+
+            // Send event to Google Analytics
+            if (typeof gtag === 'function') {
+                gtag('event', 'click', {
+                    'event_category': 'conversion',
+                    'event_label': 'pay_button_clicked',
+                    'value': 1
+                });
+            }
 
             document.getElementById('modal').style.display = 'flex';
         });
