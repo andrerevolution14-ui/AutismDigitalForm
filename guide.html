@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprech-Helden Masterclass | Der ultimative Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --dark: #0F172A;
+            --slate: #475569;
+            --white: #FFFFFF;
+            --success: #10B981;
+        }
+
+        /* Responsive Core */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark);
+            background: #F8FAFC;
+            line-height: 1.6;
+        }
+
+        .guide-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .guide-container {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 80px;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 25px;
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 1;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            color: var(--primary);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--slate);
+        }
+
+        .dropcap::first-letter {
+            font-family: 'Playfair Display', serif;
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            padding: 8px 12px 0 0;
+            color: var(--primary);
+        }
+
+        /* Cover & Branding */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+            padding: 40px 25px;
+        }
+
+        .cover img {
+            width: 100%;
+            max-width: 450px;
+            margin: 40px 0;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Masterclass Content Elements */
+        .action-step {
+            background: var(--primary-light);
+            border-radius: 24px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .action-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .pro-tip {
+            background: #FFFBEB;
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 16px 16px 0;
+            margin: 25px 0;
+        }
+
+        /* Mobile-Ready Table/Grid */
+        .plan-grid {
+            display: grid;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .plan-card {
+            background: white;
+            border: 2px solid #F1F5F9;
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .day-num {
+            font-weight: 800;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Checklist */
+        .interactive-list {
+            list-style: none;
+        }
+
+        .interactive-list li {
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .interactive-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            .guide-container {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+
+        .floating-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .floating-nav a:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-nav no-print">
+        <a href="#" onclick="window.print()">📥 PDF</a>
+        <a href="#plan">📅 Plan</a>
+        <a href="#tips">💡 Pro-Tips</a>
+    </div>
+
+    <div class="guide-container">
+        <!-- COVER -->
+        <section class="cover">
+            <span style="text-transform: uppercase; letter-spacing: 5px; color: var(--secondary); font-weight: 700;">Die
+                Masterclass</span>
+            <h1>Sprech Helden</h1>
+            <p style="font-size: 1.3rem; max-width: 600px; color: var(--slate);">Der professionelle Begleiter für Eltern
+                von Kindern ab 2 Jahren. Strategisch. Liebevoll. Alltagstauglich.</p>
+            <img src="kidstalk_header_illustration.png" alt="Sprech-Helden Masterclass">
+            <div
+                style="background: var(--primary); color: white; padding: 15px 30px; border-radius: 50px; font-weight: 700;">
+                30 Tage Alltags-Transformation</div>
+        </section>
+
+        <!-- INTRODUCTION -->
+        <section>
+            <h2>Warum 2+ Jahre kritisch sind</h2>
+            <p class="dropcap">In diesem Alter entwickeln Kinder eine enorme kognitive Kapazität. Sie wissen genau, was
+                sie wollen, aber die Motorik der Sprache hinkt oft hinterher. Das führt zu Frustration. Unser Ziel ist
+                es, diese Frustration in <strong>Kommunikations-Energie</strong> umzuwandeln.</p>
+
+            <div class="pro-tip">
+                <strong>Wichtig zu wissen:</strong> In diesem Alter ist "Nicht-Sprechen" oft eine effiziente
+                Entscheidung. Wenn das Kind mit Zeigen ans Ziel kommt, warum sollte es sich die Mühe machen, komplexe
+                Wörter zu formen? Wir verändern die Spielregeln.
+            </div>
+        </section>
+
+        <!-- PHASE 1 -->
+        <section id="tips">
+            <h2>Phase 1: Die Goldene Warteregel (Tag 1-10)</h2>
+            <p>Die häufigste Barriere ist das "Helfersyndrom" der Eltern. Wir antizipieren Wünsche.</p>
+
+            <div class="action-step">
+                <span class="action-badge">Strategie</span>
+                <h3>Die 10-Sekunden-Lücke</h3>
+                <p>Wenn Ihr Kind auf den Wasserbecher zeigt, nehmen Sie ihn in die Hand, aber geben Sie ihn nicht sofort
+                    frei. Halten Sie inne. Schauen Sie Ihr Kind an. Warten Sie 10 Sekunden ab.</p>
+                <ul class="interactive-list">
+                    <li>Kein Druck ("Sag mal Wasser!")</li>
+                    <li>Nur präsent sein und warten</li>
+                    <li>Den kleinsten Lautversuch mit dem Becher belohnen</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PHASE 2 -->
+        <section>
+            <h2>Phase 2: Die Entscheidungs-Architektur (Tag 11-20)</h2>
+            <p>Wir eliminieren Ja/Nein-Fragen. Diese sind Sackgassen der Kommunikation.</p>
+
+            <div class="action-step">
+                <span class="action-badge">Strategie</span>
+                <h3>Forced Choice (Erzwungene Wahl)</h3>
+                <p>Bieten Sie immer zwei Alternativen an, auch wenn eine offensichtlich ist. Halten Sie beide Objekte
+                    hoch.</p>
+                <div style="background:white; padding: 20px; border-radius: 12px; font-style: italic;">
+                    "Willst du den blauen Traktor oder das rote Auto?"
+                </div>
+                <p style="margin-top: 15px;"><strong>Warum das wirkt:</strong> Das Gehirn muss das Wort hören,
+                    verarbeiten und eine Auswahl lautlich markieren (auch wenn es nur "Au" für Auto ist).</p>
+            </div>
+        </section>
+
+        <!-- PHASE 3 -->
+        <section>
+            <h2>Phase 3: Narrative Expansion (Tag 21-30)</h2>
+            <p>Jetzt bauen wir die Sätze Ihres Kindes aus. Wir werden zum lebenden Echo.</p>
+
+            <div class="action-step">
+                <span class="action-badge">Strategie</span>
+                <h3>Die "Plus Eins" Methode</h3>
+                <p>Wenn Ihr Kind ein Wort sagt, geben Sie es mit einem zusätzlichen Wort zurück.</p>
+                <ul class="interactive-list">
+                    <li>Kind: "Hund." -> Sie: "Lieber Hund."</li>
+                    <li>Kind: "Essen." -> Sie: "Apfel essen."</li>
+                    <li>Kind: "Da." -> Sie: "Da ist Papa."</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- THE 30 DAY MASTERPLAN -->
+        <section id="plan" style="background: #F1F5F9;">
+            <h2>Der 30-Tage Masterplan</h2>
+            <p>Befolgen Sie diese Schritte täglich (ca. 15 Minuten bewusste Zeit).</p>
+
+            <div class="plan-grid">
+                <div class="plan-card">
+                    <span class="day-num">Tag 01-05: Stille Präsenz</span>
+                    <h3>Der stille Schatten</h3>
+                    <p>Spielen Sie schweigend mit. Kommentieren Sie NICHTS. Seien Sie einfach da. Lassen Sie das Kind
+                        den ersten Laut machen.</p>
+                </div>
+                <div class="plan-card">
+                    <span class="day-num">Tag 06-10: Onomatopoesie</span>
+                    <h3>Sound statt Wörter</h3>
+                    <p>Nutzen Sie "Brumm", "Miau", "Puff". Diese Laute sind motorisch leichter und bauen Brücken im
+                        Gehirn.</p>
+                </div>
+                <div class="plan-card">
+                    <span class="day-num">Tag 11-15: Die Sabotage</span>
+                    <h3>Kreative Fehler</h3>
+                    <p>Geben Sie dem Kind die Gabel für die Suppe. Warten Sie auf den Protest. Protest ist die
+                        ehrlichste Form der Kommunikation.</p>
+                </div>
+                <div class="plan-card">
+                    <span class="day-num">Tag 16-20: Auswahl-Marathon</span>
+                    <h3>Wahl-Möglichkeiten</h3>
+                    <p>Wenden Sie die Phase 2 bei JEDER Gelegenheit an (Essen, Kleidung, Spielzeug).</p>
+                </div>
+                <div class="plan-card">
+                    <span class="day-num">Tag 21-25: Satzbau-Stein</span>
+                    <h3>Sätze vervollständigen</h3>
+                    <p>Sagen Sie: "Ich sehe einen grünen..." und warten Sie auf dem Bild vor dem Baum.</p>
+                </div>
+                <div class="plan-card">
+                    <span class="day-num">Tag 26-30: Video-Reflexion</span>
+                    <h3>Erfolge feiern</h3>
+                    <p>Filmen Sie eine Interaktion. Sie werden staunen, wie viel mehr Ihr Kind jetzt kommuniziert als
+                        vor 30 Tagen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEEP DIVE TIPS -->
+        <section>
+            <h2>Pro-Tipps für den Erfolg</h2>
+            <div class="pro-tip">
+                <strong>Augenhöhe:</strong> Gehen Sie physisch auf die Knie. Kommunikation findet von Gesicht zu Gesicht
+                statt, nicht von oben herab.
+            </div>
+            <div class="pro-tip" style="border-color: var(--secondary);">
+                <strong>Keine Bildschirme:</strong> Während der 30 Tage reduzieren Sie passiven Medienkonsum. Youtube
+                spricht nicht MIT Ihrem Kind, es spricht NUR ZU ihm.
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section style="text-align: center; border-top: 1px solid #E2E8F0;">
+            <h2 style="font-style: italic;">"Jedes Wort beginnt mit Vertrauen."</h2>
+            <p>Vielen Dank, dass Sie diesen Weg gehen. Die Sprachentwicklung ist ein Marathon, kein Sprint. Genießen Sie
+                die Stimme Ihres Kindes – sie ist einzigartig.</p>
+            <div style="margin-top: 40px; color: #94A3B8; font-size: 0.8rem;">
+                &copy; 2026 Sprech-Helden Premium Guide. Alle Rechte vorbehalten.
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

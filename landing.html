@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wort-für-Wort | Sprachförderung für dein Kind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #67E8F9;
+            --accent: #F472B6;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+            top: -100px;
+            right: -100px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        h1 span {
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            color: #64748B;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-box {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #94A3B8;
+            text-decoration: line-through;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(74, 144, 226, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .guarantee {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .features {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--light);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            padding: 3rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #94A3B8;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="hero-blob"></div>
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <span class="badge">Limitiertes Angebot für Eltern</span>
+                    <h1>Wenn dein Kind noch wenig spricht – <span>dieses System hilft.</span></h1>
+                    <p class="lead">Hilf deinem Kind (2-5 Jahre), die Freude am Sprechen zu finden. Ohne Druck, ohne
+                        Tränen – mit einem praxiserprobten 30-Tage-Plan für zu Hause.</p>
+
+                    <div class="grid">
+                        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                            <div style="color: var(--primary); font-weight: bold;">✓</div>
+                            <p>Keine medizinische Fachsprache</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                            <div style="color: var(--primary); font-weight: bold;">✓</div>
+                            <p>Nur 15 Minuten pro Tag</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-box">
+                    <p
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">
+                        Sofortiger Zugang zum Premium Guide</p>
+                    <div class="price">9€ <span>49€</span></div>
+                    <p style="margin-bottom: 1.5rem; color: #64748B;">Einmalige Zahlung. Kein Abo. Vollständiger 30-Tage
+                        Alltags-Masterplan.</p>
+                    <a href="javascript:void(0)" class="btn" id="payBtn">Jetzt bezahlen & Zugang erhalten</a>
+                    <div class="guarantee">
+                        🔒 100% Sicherer Bezahlvorgang
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">Was du bekommst</h2>
+            <div class="grid">
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>Die 3-Phasen-Strategie</h3>
+                    <p>Vom ersten Blickkontakt bis zur aktiven Kommunikation. Wir bauen das Fundament Schritt für
+                        Schritt auf.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📅</div>
+                    <h3>30-Tage-Challenge</h3>
+                    <p>Jeden Tag eine kleine, einfache Übung, die du nahtlos in deinen Alltag integrieren kannst.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📝</div>
+                    <h3>Checklisten & Tracker</h3>
+                    <p>Druckbare Vorlagen, um Fortschritte zu sehen und motiviert zu bleiben.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Wort-für-Wort. Alle Rechte vorbehalten. | <a href="#">Impressum</a> | <a href="#">Datenschutz</a></p>
+    </footer>
+    <div id="modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.9); z-index:1000; align-items:center; justify-content:center; padding: 20px; backdrop-filter: blur(10px);">
+        <div
+            style="background:white; padding:50px; border-radius:40px; max-width:550px; text-align:center; box-shadow:0 30px 100px rgba(0,0,0,0.5); position:relative;">
+            <div style="font-size:4rem; margin-bottom:20px;">🎁</div>
+            <h2 style="margin-bottom:20px; font-family:'Outfit', sans-serif; color:#4A90E2;">Ein Geschenk für dich!</h2>
+            <p style="color:#64748B; margin-bottom:30px; line-height:1.8; font-size:1.1rem;">Wir danken dir für dein
+                Interesse an der Sprachförderung deines Kindes. <br><br>Da wir so vielen Familien wie möglich helfen
+                möchten, haben wir uns entschieden, dir diesen Premium-Guide heute <strong>vollständig
+                    kostenlos</strong> zu schenken.</p>
+            <a href="guide.html" target="_blank" class="btn"
+                style="background:#F472B6; text-decoration:none; padding:1.5rem; font-size:1.2rem;">Premium Guide jetzt
+                gratis öffnen</a>
+            <p style="margin-top:25px; font-size:0.9rem; color:#94A3B8; cursor:pointer; text-decoration:underline;"
+                onclick="document.getElementById('modal').style.display='none'">Zurück zur Seite</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if coming from quiz
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('quiz_complete') === 'true') {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Click Tracking Logic
+        document.getElementById('payBtn').addEventListener('click', function () {
+            // Increment click count
+            let clicks = localStorage.getItem('pay_button_clicks') || 0;
+            clicks = parseInt(clicks) + 1;
+            localStorage.setItem('pay_button_clicks', clicks);
+
+            console.log('Button Clicked! Total clicks:', clicks);
+
+            document.getElementById('modal').style.display = 'flex';
+        });
+
+        // Developer Tool: View clicks in footer (discreet)
+        const footer = document.querySelector('footer');
+        const stats = document.createElement('span');
+        stats.style.cssText = 'font-size: 0.6rem; color: #cbd5e1; cursor: pointer; display: block; margin-top: 10px;';
+        stats.innerText = 'Admin Stats';
+        stats.onclick = () => alert('Total Pay Button Clicks: ' + (localStorage.getItem('pay_button_clicks') || 0));
+        footer.appendChild(stats);
+    </script>
+</body>
+
+</html>

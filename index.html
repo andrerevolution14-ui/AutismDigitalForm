@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprech-Check | Wo steht dein Kind?</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text: #1E293B;
+            --slate: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #EEF2FF 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.6;
+            z-index: -1;
+            top: -200px;
+            left: -200px;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 100%;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Card Style */
+        .card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--primary);
+        }
+
+        p {
+            color: var(--slate);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+            filter: brightness(1.1);
+        }
+
+        .option-btn {
+            background: #F1F5F9;
+            color: var(--text);
+            text-align: left;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            width: 100%;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #EEF2FF;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        /* Levels & Results */
+        .result-stage {
+            display: none;
+        }
+
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Hidden elements */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-blob"></div>
+    <div class="container">
+
+        <!-- INTRO PAGE -->
+        <div id="intro-stage" class="card">
+            <span class="badge">Privat & Kostenlos</span>
+            <h1>Wo steht die Sprachentwicklung deines Kindes?</h1>
+            <p>Finde in 2 Minuten heraus, wie du dein Kind am besten unterstützen kannst – ohne Druck, mit viel Herz.
+            </p>
+            <ul style="text-align: left; margin-bottom: 30px; list-style: none;">
+                <li style="margin-bottom: 10px;">✅ Verständnis der aktuellen Entwicklungsstufe</li>
+                <li style="margin-bottom: 10px;">✅ Praktische nächste Schritte</li>
+                <li style="margin-bottom: 10px;">✅ Keine medizinische Diagnose</li>
+            </ul>
+            <button class="btn" onclick="startQuiz()">Quiz starten</button>
+        </div>
+
+        <!-- QUIZ STAGE -->
+        <div id="quiz-stage" class="hidden">
+            <div class="progress-container">
+                <div id="progress" class="progress-bar" style="width: 10%;"></div>
+            </div>
+            <div class="card">
+                <p id="question-counter" style="font-weight: 700; color: var(--primary); margin-bottom: 10px;">Frage 1
+                    von 10</p>
+                <h2 id="question-text" style="margin-bottom: 30px;">Wie viele Wörter spricht dein Kind aktuell
+                    (ungefähr)?</h2>
+                <div id="options-container">
+                    <!-- Options injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULT STAGE -->
+        <div id="result-stage" class="result-stage">
+            <div class="card" style="text-align: left;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div id="semaforo"
+                        style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                    </div>
+                    <h2 id="result-title" style="margin-bottom: 5px;">Deine Auswertung</h2>
+                    <span id="score-text" style="font-weight: 700; color: var(--slate);">Punktzahl: 0 / 30</span>
+                </div>
+
+                <div
+                    style="background: #F8FAFC; padding: 25px; border-radius: 20px; margin-bottom: 25px; border: 1px solid #E2E8F0;">
+                    <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 15px;">Zusammenfassung (Stufe:
+                        <span id="stufe-name"></span>)
+                    </h3>
+                    <p id="result-description" style="font-size: 1rem; margin-bottom: 0;"></p>
+                </div>
+
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px; color: var(--text);">Sofort-Lösungen für heute:</h3>
+                <div id="fast-solutions" style="margin-bottom: 30px;">
+                    <!-- Solutions injected by JS -->
+                </div>
+
+                <button class="btn" onclick="goToGift()" style="width: 100%;">Vollständigen Masterplan kostenlos
+                    erhalten</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "Wie viele Wörter spricht dein Kind aktuell (ungefähr)?",
+                options: [
+                    { text: "Weniger als 20 (meist nur Laute)", score: 1 },
+                    { text: "Zwischen 20 und 50 Wörtern", score: 2 },
+                    { text: "Mehr als 50 Wörter", score: 3 }
+                ]
+            },
+            {
+                q: "Verbindet dein Kind bereits zwei Wörter (z.B. 'Mama da' or 'Auto fahren')?",
+                options: [
+                    { text: "Noch gar nicht", score: 1 },
+                    { text: "Manchmal, sehr selten", score: 2 },
+                    { text: "Ja, regelmäßig", score: 3 }
+                ]
+            },
+            {
+                q: "Wie reagiert dein Kind, wenn es etwas haben möchte?",
+                options: [
+                    { text: "Es zeigt nur oder schreit", score: 1 },
+                    { text: "Es nutzt Gesten und einzelne Laute", score: 2 },
+                    { text: "Es versucht das Wort zu sagen", score: 3 }
+                ]
+            },
+            {
+                q: "Versteht dein Kind einfache Anweisungen (z.B. 'Hol deine Schuhe') ohne Gesten?",
+                options: [
+                    { text: "Nur wenn ich darauf zeige", score: 1 },
+                    { text: "Meistens ja", score: 2 },
+                    { text: "Ja, absolut problemlos", score: 3 }
+                ]
+            },
+            {
+                q: "Wie oft sucht dein Kind beim Kommunizieren Blickkontakt?",
+                options: [
+                    { text: "Eher selten", score: 1 },
+                    { text: "Oft, wenn es etwas will", score: 2 },
+                    { text: "Sehr aktiv und regelmäßig", score: 3 }
+                ]
+            },
+            {
+                q: "Ahmt dein Kind Geräusche oder Wörter nach, die du sagst?",
+                options: [
+                    { text: "Fast nie", score: 1 },
+                    { text: "Manchmal Tierlaute", score: 2 },
+                    { text: "Ja, es probiert vieles aus", score: 3 }
+                ]
+            },
+            {
+                q: "Bemerkt man Frustration, wenn das Kind nicht verstanden wird?",
+                options: [
+                    { text: "Ja, es gibt dann schnell auf", score: 1 },
+                    { text: "Es wird wütend oder weint", score: 2 },
+                    { text: "Es versucht es anders zu zeigen", score: 3 }
+                ]
+            },
+            {
+                q: "Interagiert dein Kind aktiv mit anderen Erwachsenen?",
+                options: [
+                    { text: "Nur distanziert / schüchtern", score: 1 },
+                    { text: "Durch Zeigen und Lächeln", score: 2 },
+                    { text: "Sucht aktiv den Austausch", score: 3 }
+                ]
+            },
+            {
+                q: "Wie nutzt dein Kind Gesten (Winken, Klatschen, Zeigen)?",
+                options: [
+                    { text: "Nur sehr wenige Gesten", score: 1 },
+                    { text: "Gesten sind die Hauptkommunikation", score: 2 },
+                    { text: "Gesten unterstützen das Sprechen", score: 3 }
+                ]
+            },
+            {
+                q: "Hast du in den letzten 3 Monaten Fortschritte bemerkt?",
+                options: [
+                    { text: "Es scheint zu stagnieren", score: 1 },
+                    { text: "Ganz kleine Schritte", score: 2 },
+                    { text: "Ja, es kommt immer mehr dazu", score: 3 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let totalScore = 0;
+
+        function startQuiz() {
+            document.getElementById('intro-stage').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('question-counter').innerText = `Frage ${currentQuestion + 1} von 10`;
+            document.getElementById('progress').style.width = ((currentQuestion + 1) / 10 * 100) + '%';
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            q.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = 'btn option-btn';
+                b.innerText = opt.text;
+                b.onclick = () => selectOption(opt.score);
+                container.appendChild(b);
+            });
+        }
+
+        function selectOption(score) {
+            totalScore += score;
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-stage').classList.add('hidden');
+            document.getElementById('result-stage').style.display = 'block';
+
+            let title, stufe, desc, color, solutions = [];
+
+            document.getElementById('score-text').innerText = `Punktzahl: ${totalScore} / 30`;
+
+            if (totalScore <= 16) {
+                stufe = "Entdecker-Phase (Grundlagen)";
+                color = "#EF4444"; // Rot
+                desc = "Dein Kind befindet sich in der ersten Phase des Spracherwerbs. Es kommuniziert viel über Gesten, Blicke und einzelne Laute. Das Verständnis für das, was du sagst, ist meist schon viel weiter als die eigene Produktion von Wörtern. Jetzt ist es wichtig, den Druck herauszunehmen und ein sicheres Fundament zu bauen.";
+                solutions = [
+                    "<strong>Die 10-Sekunden-Regel:</strong> Warte bewusst 10 Sekunden, bevor du auf Gesten reagierst. Gib dem Gehirn Zeit, nach Wörtern zu suchen.",
+                    "<strong>Auf Augenhöhe gehen:</strong> Sprich immer auf der gleichen physischen Höhe. Das schafft Sicherheit und Fokus.",
+                    "<strong>Parallel-Sprechen:</strong> Kommentiere, was DU gerade tust, ohne Fragen zu stellen."
+                ];
+            } else if (totalScore <= 24) {
+                stufe = "Interaktions-Phase (Fortgeschrittene)";
+                color = "#F59E0B"; // Gelb
+                desc = "Dein Kind nutzt bereits Wörter, um Bedürfnisse auszudrücken, aber die Verknüpfung von Ideen und komplexeren Aussagen hinkt noch etwas hinterher. Es gibt bereits eine starke Basis, aber der 'Funke' für flüssige Kommunikation muss noch intensiviert werden.";
+                solutions = [
+                    "<strong>Erzwungene Wahl:</strong> Biete immer zwei Dinge an ('Apfel oder Banane?'), auch wenn du die Antwort kennst.",
+                    "<strong>Sabotage-Spiel:</strong> 'Vergiss' absichtlich Dinge (z.B. den Löffel beim Essen), um dein Kind zum Sprechen zu bewegen.",
+                    "<strong>Wort-Erweiterung:</strong> Wenn dein Kind 'Auto' sagt, antworte ('Ja, ein rotes Auto')."
+                ];
+            } else {
+                stufe = "Aufbau-Phase (Profi)";
+                color = "#10B981"; // Grün
+                desc = "Toll! Dein Kind hat bereits einen guten Wortschatz und verbindet Wörter. Jetzt geht es darum, die Grammatik zu festigen und längere Sätze organisch zu bilden, ohne dass es sich wie Unterricht anfühlt.";
+                solutions = [
+                    "<strong>Sätze vervollständigen:</strong> Singe Lieder oder sage Reime und lasse das letzte Wort weg.",
+                    "<strong>Rollenspiele:</strong> Nutze Puppen oder Autos, um Dialoge zu simulieren.",
+                    "<strong>Narrative Expansion:</strong> Erzähle kleine Geschichten über das, was ihr gerade im Park seht."
+                ];
+            }
+
+            document.getElementById('stufe-name').innerText = stufe;
+            document.getElementById('semaforo').style.backgroundColor = color;
+            document.getElementById('result-description').innerText = desc;
+
+            const solContainer = document.getElementById('fast-solutions');
+            solContainer.innerHTML = '';
+            solutions.forEach(sol => {
+                const div = document.createElement('div');
+                div.style.padding = '15px';
+                div.style.background = '#EEF2FF';
+                div.style.borderRadius = '12px';
+                div.style.marginBottom = '10px';
+                div.style.fontSize = '0.95rem';
+                div.innerHTML = sol;
+                solContainer.appendChild(div);
+            });
+        }
+
+        function goToGift() {
+            window.location.href = 'landing.html?quiz_complete=true';
+        }
+    </script>
+</body>
+
+</html>

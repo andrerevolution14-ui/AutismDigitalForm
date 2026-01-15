@@ -1,0 +1,15 @@
+{
+    "name": "digital-product-kidstalk",
+    "version": "1.0.0",
+    "description": "Wort-für-Wort: Ein digitaler Guide für die Sprachentwicklung bei Kindern",
+    "main": "index.js",
+    "scripts": {
+        "dev": "npx serve .",
+        "start": "npx serve .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {}
+}
