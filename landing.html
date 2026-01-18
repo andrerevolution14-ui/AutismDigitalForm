@@ -207,23 +207,10 @@
         /* --- GOOGLE ANALYTICS PLACEHOLDER --- */
         /* TODO: Replace G-XXXXXXXXXX with your actual Measurement ID */
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-32B4F46FNY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-32B4F46FNY');
-    </script>
     <script src="https://t.contentsquare.net/uxa/27b0be075809c.js"></script>
-    <script type="text/javascript">
-        (function (c, l, a, r, i, t, y) {
-            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "v1udz71kxu");
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body>
@@ -311,29 +298,52 @@
     </div>
 
     <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://bikhubfnygptlmdcakso.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpa2h1YmZueWdwdGxtZGNha3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzA4MDQsImV4cCI6MjA4NDMwNjgwNH0.jgYmIeMN0Mj-kW8EFUy06F5YjM1LIrR8aKdUHN9LV5E';
+        let supabaseClient;
+
+        try {
+            supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+            console.log('Supabase initialized successfully');
+        } catch (e) {
+            console.error('Failed to initialize Supabase:', e);
+        }
+
+        const handleButtonClick = async (rowId) => {
+            console.log('Attempting to track click for:', rowId);
+            if (!supabaseClient) {
+                console.error('Supabase client not initialized');
+                return;
+            }
+            const { data, error } = await supabaseClient.rpc('increment_button_click', {
+                row_id: rowId
+            });
+
+            if (error) {
+                console.error('Supabase RPC Error:', error.message, error.details);
+            } else {
+                console.log('Click tracked successfully:', rowId, data);
+            }
+        };
+
         // Check if coming from quiz
-        // const urlParams = new URLSearchParams(window.location.search);
-        // if (urlParams.get('quiz_complete') === 'true') {
-        //     document.getElementById('modal').style.display = 'flex';
-        // }
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('quiz_complete') === 'true') {
+            document.getElementById('modal').style.display = 'flex';
+        }
 
         // Click Tracking Logic
         document.getElementById('payBtn').addEventListener('click', function () {
-            // Increment click count
+            // Increment click count (Supabase)
+            handleButtonClick('pay_now_clicks');
+
+            // Increment click count (Local Storage)
             let clicks = localStorage.getItem('pay_button_clicks') || 0;
             clicks = parseInt(clicks) + 1;
             localStorage.setItem('pay_button_clicks', clicks);
 
             console.log('Button Clicked! Total clicks:', clicks);
-
-            // Send event to Google Analytics
-            if (typeof gtag === 'function') {
-                gtag('event', 'pay_button_click', {
-                    'event_category': 'conversion',
-                    'event_label': 'pay_button_clicked',
-                    'value': 1
-                });
-            }
 
             document.getElementById('modal').style.display = 'flex';
         });

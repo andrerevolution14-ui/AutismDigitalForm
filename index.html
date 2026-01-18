@@ -8,23 +8,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-32B4F46FNY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-32B4F46FNY');
-    </script>
     <script src="https://t.contentsquare.net/uxa/27b0be075809c.js"></script>
-    <script type="text/javascript">
-        (function (c, l, a, r, i, t, y) {
-            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "v1udz71kxu");
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
     <style>
         :root {
             --primary: #4F46E5;
@@ -261,6 +248,35 @@
     </div>
 
     <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://bikhubfnygptlmdcakso.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpa2h1YmZueWdwdGxtZGNha3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzA4MDQsImV4cCI6MjA4NDMwNjgwNH0.jgYmIeMN0Mj-kW8EFUy06F5YjM1LIrR8aKdUHN9LV5E';
+        let supabaseClient;
+
+        try {
+            supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+            console.log('Supabase initialized successfully');
+        } catch (e) {
+            console.error('Failed to initialize Supabase:', e);
+        }
+
+        const handleButtonClick = async (rowId) => {
+            console.log('Attempting to track click for:', rowId);
+            if (!supabaseClient) {
+                console.error('Supabase client not initialized');
+                return;
+            }
+            const { data, error } = await supabaseClient.rpc('increment_button_click', {
+                row_id: rowId
+            });
+
+            if (error) {
+                console.error('Supabase RPC Error:', error.message, error.details);
+            } else {
+                console.log('Click tracked successfully:', rowId, data);
+            }
+        };
+
         const questions = [
             {
                 q: "Wie viele Wörter spricht dein Kind aktuell (ungefähr)?",
@@ -348,6 +364,7 @@
         let totalScore = 0;
 
         function startQuiz() {
+            handleButtonClick('quiz_start_clicks');
             document.getElementById('intro-stage').classList.add('hidden');
             document.getElementById('quiz-stage').classList.remove('hidden');
             showQuestion();
