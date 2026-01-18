@@ -328,10 +328,8 @@
         };
 
         // Check if coming from quiz
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('quiz_complete') === 'true') {
-            document.getElementById('modal').style.display = 'flex';
-        }
+        // Note: We keep the parameter in the URL for tracking, but we don't auto-open the modal anymore
+        // as the user wants the "gift" surprise to happen only after clicking the pay button.
 
         // Click Tracking Logic
         document.getElementById('payBtn').addEventListener('click', function () {
